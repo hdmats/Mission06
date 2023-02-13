@@ -1,0 +1,52 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    //changes title
+    ViewData["Title"] = "Movies";
+}
+<!--imports model-->
+@model MoviesModel;
+<!--calculator form-->
+<section>
+    <div>
+        <h2 class="title">Movie Database</h2>
+        <p class="title">Enter a movie to put it in the database</p>
+        <form method="post">
+            <label for="title">Title: </label>
+            <input id="title" asp-for="title" />
+            <label for="category">Category:</label>
+            <select id="category" asp-for="category">
+                <option value="Action/Adventure">Action/Adventure</option>
+                <option value="Comedy">Comedy</option>
+                <option value="Drama">Drama</option>
+                <option value="Family">Family</option>
+                <option value="Horror/Suspense">Horror/Suspense</option>
+                <option value="Miscellaneous">Miscellaneous</option>
+                <option value="Television">Televison</option>
+                <option value="VHS">VHS</option>
+            </select>
+            <label for="rating">Rating: </label>
+            <select id="rating" asp-for="rating">
+                <option value="G">G</option>
+                <option value="PG">PG</option>
+                <option value="PG-13">PG-13</option>
+                <option value="R">R</option>
+            </select>
+            <label for="year">Year: </label>
+            <input type="number" id="year" asp-for="year" />
+            <label for="director">Director: </label>
+            <input id="director" asp-for="director" />
+            <label for="edit">Edited: </label>
+            <input type="checkbox" id="edit" asp-for="edit" />
+            <label for="lent">Lent To: </label>
+            <input id="lent" asp-for="lent" />
+            <label for="notes">Notes: </label>
+            <textarea id="notes" asp-for="notes"></textarea>
+
+            <button id="sendBtn" class="button" type="submit">Submit</button>
+            <!--error messages-->
+            <div id="error" asp-validation-summary="All"></div>
+        </form>
+    </div>
+</section>
