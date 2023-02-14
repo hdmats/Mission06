@@ -19,31 +19,36 @@ namespace Mission06.Controllers
             _logger = logger;
             _MovieContext = someName;
         }
-
+        //sends user to indexpage on loading
         public IActionResult Index()
         {
             return View();
         }
-
+        //sends user to podcast page
         public IActionResult Podcast()
         {
             return View();
         }
 
+        //Get method
         [HttpGet]
+        //Sends user to movies form page
         public IActionResult Movies()
         {
             return View();
         }
+        //Post method
         [HttpPost]
         public IActionResult Movies(MoviesModel m)
         {
+            //if foerm is valid adds form to database and sends user to confirmation page
             if (ModelState.IsValid)
             {
                 _MovieContext.Add(m);
                 _MovieContext.SaveChanges();
                 return View("Confirmation", m);
             }
+            //if form does not validate sends user back to the form
             else
             {
                 return View("Movies");

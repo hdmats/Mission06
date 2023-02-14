@@ -18,7 +18,7 @@ namespace Mission06.Models
         protected override void OnModelCreating(ModelBuilder mb)
         {
             mb.Entity<MoviesModel>().HasData(
-               
+               //seed data
                 new MoviesModel
                 {
                     ApplicationID = 1,

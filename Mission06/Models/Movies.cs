@@ -8,6 +8,7 @@ namespace Mission06.Models
 {
     public class MoviesModel
     {
+        //key
         [Key]
         [Required]
         public int ApplicationID { get; set; }
@@ -23,6 +24,7 @@ namespace Mission06.Models
         public string director { get; set; }
         public bool edit { get; set; }
         public string lent { get; set; }
+        //notes can be a max of 25 characters
         [Range(0,25, ErrorMessage = "Notes have a max of 25 characters")]
         public string notes { get; set; }
 
