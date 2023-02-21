@@ -26,7 +26,7 @@ namespace Mission06.Models
         public bool edit { get; set; }
         public string lent { get; set; }
         //notes can be a max of 25 characters
-        [Range(0,25, ErrorMessage = "Notes have a max of 25 characters")]
+        [StringLength(25)]
         public string notes { get; set; }
 
     }
