@@ -1,22 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
+using Microsoft.EntityFrameworkCore;
 using Mission06.Models;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Mission06.Controllers
 {
     public class HomeController : Controller
     {
-        private readonly ILogger<HomeController> _logger;
         private MovieDatabaseContext _MovieContext { get; set; }
 
-        public HomeController(ILogger<HomeController> logger, MovieDatabaseContext someName)
+        public HomeController(MovieDatabaseContext someName)
         {
-            _logger = logger;
             _MovieContext = someName;
         }
         //sends user to indexpage on loading
@@ -35,7 +29,9 @@ namespace Mission06.Controllers
         //Sends user to movies form page
         public IActionResult Movies()
         {
-            return View();
+            ViewBag.Categories =  _MovieContext.Categories.ToList();
+
+            return View(new MoviesModel());
         }
         //Post method
         [HttpPost]
@@ -51,13 +47,45 @@ namespace Mission06.Controllers
             //if form does not validate sends user back to the form
             else
             {
-                return View("Movies");
+                ViewBag.Categories = _MovieContext.Categories.ToList();
+                return View(m);
             }
         }
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
+
+        public IActionResult viewMovies()
         {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            var movies = _MovieContext.Responses.Include(x => x.category).ToList();
+            return View(movies);
+        }
+
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            ViewBag.Categories = _MovieContext.Categories.ToList();
+
+            var movie = _MovieContext.Responses.Single(x => x.ApplicationID == id);
+
+            return View("Movies", movie);
+        }
+        [HttpPost]
+        public IActionResult Edit(MoviesModel m)
+        {
+            _MovieContext.Update(m);
+            _MovieContext.SaveChanges();
+            return RedirectToAction("viewMovies"); 
+        }
+        [HttpGet]
+        public IActionResult Delete(int id)
+        {
+            var movie = _MovieContext.Responses.Single(x => x.ApplicationID == id);
+            return View(movie);
+        }
+        [HttpPost]
+        public IActionResult Delete(MoviesModel m)
+        {
+            _MovieContext.Responses.Remove(m);
+            _MovieContext.SaveChanges();
+            return RedirectToAction("viewMovies");
         }
     }
 }

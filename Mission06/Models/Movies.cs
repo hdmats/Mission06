@@ -15,9 +15,10 @@ namespace Mission06.Models
         [Required]
         public string title { get; set; }
         [Required]
-        public string category { get; set; }
+        public int categoryID { get; set; }
+        public Category category { get; set; }
         [Required]
-        public int year { get; set; }
+        public int? year { get; set; }
         [Required]
         public string rating { get; set; }
         [Required]

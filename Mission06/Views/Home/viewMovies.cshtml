@@ -1,0 +1,38 @@
+﻿@{
+    //changes title
+    ViewData["Title"] = "Movies";
+}
+@model List<MoviesModel> 
+<table class="table table-bordered table-striped">
+
+    <thead class="font-weight-bold">
+        <tr>
+            <td>Title</td>
+            <td>Category</td>
+            <td>Year</td>
+            <td>Rating</td>
+            <td>Director</td>
+            <td>Edit</td>
+            <td>Lent</td>
+            <td>Notes</td>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var x in Model)
+            {
+            <tr>
+                <td>@x.title</td>
+                <td>@x.category.categoryname</td>
+                <td>@x.year</td>
+                <td>@x.rating</td>
+                <td>@x.director</td>
+                <td>@x.edit</td>
+                <td>@x.lent</td>
+                <td>@x.notes</td>
+                <td><a class="button" asp-controller="Home" asp-action="Edit" asp-route-id="@x.ApplicationID">Edit</a></td>
+                <td><a class="button" asp-controller="Home" asp-action="Delete" asp-route-id="@x.ApplicationID">Delete</a></td>
+            </tr>
+            }
+    </tbody>
+</table>
+<a class="button" style="margin-left: 3rem;" asp-controller="Home" asp-action="Movies">Add Movie</a>

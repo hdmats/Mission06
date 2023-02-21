@@ -1,0 +1,18 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+    ViewData["Title"] = "Delete";
+}
+@model MoviesModel
+<div class="podcast">
+    <div style="text-align:center;">
+        <h2>Confirm Deletion</h2>
+
+        <form method="post" style="grid-template-columns: .5fr .5fr;"asp-action="Delete">
+            <button type="submit" style="background: #CC3E40; border: 1px solid #CC3E40; "class="button">Delete</button>
+            <a class="button" asp-controller="Home" asp-action="viewMovies">Cancel</a>
+            <input type="hidden" asp-for="ApplicationID" />
+        </form>
+    </div>
+</div>

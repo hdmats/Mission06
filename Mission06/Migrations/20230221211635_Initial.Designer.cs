@@ -8,7 +8,7 @@ using Mission06.Models;
 namespace Mission06.Migrations
 {
     [DbContext(typeof(MovieDatabaseContext))]
-    [Migration("20230213215841_Initial")]
+    [Migration("20230221211635_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -17,15 +17,71 @@ namespace Mission06.Migrations
             modelBuilder
                 .HasAnnotation("ProductVersion", "3.1.32");
 
+            modelBuilder.Entity("Mission06.Models.Category", b =>
+                {
+                    b.Property<int>("categoryID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("categoryname")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("categoryID");
+
+                    b.ToTable("Categories");
+
+                    b.HasData(
+                        new
+                        {
+                            categoryID = 1,
+                            categoryname = "Action/Adventure"
+                        },
+                        new
+                        {
+                            categoryID = 2,
+                            categoryname = "Comedy"
+                        },
+                        new
+                        {
+                            categoryID = 3,
+                            categoryname = "Drama"
+                        },
+                        new
+                        {
+                            categoryID = 4,
+                            categoryname = "Family"
+                        },
+                        new
+                        {
+                            categoryID = 5,
+                            categoryname = "Horror/Suspense"
+                        },
+                        new
+                        {
+                            categoryID = 6,
+                            categoryname = "Miscellaneous"
+                        },
+                        new
+                        {
+                            categoryID = 7,
+                            categoryname = "Television"
+                        },
+                        new
+                        {
+                            categoryID = 8,
+                            categoryname = "VHS"
+                        });
+                });
+
             modelBuilder.Entity("Mission06.Models.MoviesModel", b =>
                 {
                     b.Property<int>("ApplicationID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("category")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
+                    b.Property<int>("categoryID")
+                        .HasColumnType("INTEGER");
 
                     b.Property<string>("director")
                         .IsRequired()
@@ -53,13 +109,15 @@ namespace Mission06.Migrations
 
                     b.HasKey("ApplicationID");
 
-                    b.ToTable("responses");
+                    b.HasIndex("categoryID");
+
+                    b.ToTable("Responses");
 
                     b.HasData(
                         new
                         {
                             ApplicationID = 1,
-                            category = "Action/Adventure",
+                            categoryID = 4,
                             director = "Pete Docter",
                             edit = false,
                             lent = "Prof Hilton",
@@ -71,7 +129,7 @@ namespace Mission06.Migrations
                         new
                         {
                             ApplicationID = 2,
-                            category = "Horrer/Suspense",
+                            categoryID = 5,
                             director = "John Krasinski",
                             edit = false,
                             rating = "PG-13",
@@ -81,13 +139,22 @@ namespace Mission06.Migrations
                         new
                         {
                             ApplicationID = 3,
-                            category = "Comedy",
+                            categoryID = 1,
                             director = "Daniel Kwan",
                             edit = true,
                             rating = "R",
                             title = "Everything Everywhere All at Once",
                             year = 2022
                         });
+                });
+
+            modelBuilder.Entity("Mission06.Models.MoviesModel", b =>
+                {
+                    b.HasOne("Mission06.Models.Category", "category")
+                        .WithMany()
+                        .HasForeignKey("categoryID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

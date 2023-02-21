@@ -13,18 +13,15 @@
         <h2 class="title">Movie Database</h2>
         <p class="title">Enter a movie to put it in the database</p>
         <form method="post">
+            <input type="hidden" asp-for="ApplicationID"/>
             <label for="title">Title: </label>
             <input id="title" asp-for="title" />
             <label for="category">Category:</label>
-            <select id="category" asp-for="category">
-                <option value="Action/Adventure">Action/Adventure</option>
-                <option value="Comedy">Comedy</option>
-                <option value="Drama">Drama</option>
-                <option value="Family">Family</option>
-                <option value="Horror/Suspense">Horror/Suspense</option>
-                <option value="Miscellaneous">Miscellaneous</option>
-                <option value="Television">Televison</option>
-                <option value="VHS">VHS</option>
+            <select id="category" asp-for="categoryID">
+                @foreach (Category c in ViewBag.Categories)
+            {
+                <option value="@c.categoryID">@c.categoryname</option>
+            }
             </select>
             <label for="rating">Rating: </label>
             <select id="rating" asp-for="rating">
